@@ -7,6 +7,12 @@ import { Contact, ContactsRepo } from './server/repository';
 let contactId: number;
 
 
+interface User {
+	email: string;
+	password: string;
+}
+
+
 server
 	.post('/contacts',
 		(req: Request<{}, {}, Contact>, res: Response) => {
@@ -58,6 +64,19 @@ server
 				.status(StatusCodes.OK)
 				.send();
 		});
+server
+	.post('/signin', async (req: Request<{}, {}, User>, res: Response) => {
+		const userCredentials = req.body;
+		if (userCredentials) {
+			const user = { ...userCredentials, accessToken: 'accessToken' };
+			return res
+				.status(StatusCodes.OK)
+				.json(user);
+		}
+		return res
+			.status(StatusCodes.NOT_FOUND)
+			.send();
+	});
 
 
 server.listen(process.env.PORT, () => {
