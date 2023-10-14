@@ -17,15 +17,18 @@ export const up = async (knex: Knex) => {
 
 					table
 						.string('name', 60)
+						.checkLength('>=', 3)
 						.notNullable();
 
 					table
 						.string('email', 100)
+						.checkLength('>=', 8)
+						.unique()
 						.notNullable()
-						.index()
-						.unique();
+						.index();
 					table
 						.string('password', 72)
+						.checkLength('>=', 8)
 						.notNullable();
 				})
 				.then(() => {
