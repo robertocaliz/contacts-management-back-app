@@ -25,7 +25,8 @@ export const up = async (knex: Knex) => {
 						.checkLength('>=', 8)
 						.unique()
 						.notNullable()
-						.index();
+						.index()
+						.checkRegex('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
 					table
 						.string('password', 72)
 						.checkLength('>=', 8)
