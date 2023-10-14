@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { TABLE_NAMES } from '../../constants';
+import { REGEX, TABLE_NAMES } from '../../constants';
 
 
 
@@ -22,12 +22,12 @@ export const up = async (knex: Knex) => {
 						.string('email', 100)
 						.checkLength('>=', 8)
 						.unique()
-						.checkRegex('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+						.checkRegex(REGEX.db.email);
 					table
 						.string('phoneNumber')
 						.notNullable()
 						.unique()
-						.checkRegex('^(\\+258)?[28]\\d{8}$');
+						.checkRegex(REGEX.db.phoneNumber);
 					table
 						.integer('createdBy')
 						.unsigned();
@@ -38,7 +38,7 @@ export const up = async (knex: Knex) => {
 				.then(() => {
 					console.log(`#Table ${TABLE_NAMES.contacts} created!`);
 				});
-				
+
 		}
 	});
 

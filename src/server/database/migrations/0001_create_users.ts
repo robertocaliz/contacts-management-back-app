@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { TABLE_NAMES } from '../../constants';
+import { REGEX, TABLE_NAMES } from '../../constants';
 
 
 
@@ -26,7 +26,7 @@ export const up = async (knex: Knex) => {
 						.unique()
 						.notNullable()
 						.index()
-						.checkRegex('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+						.checkRegex(REGEX.db.email);
 					table
 						.string('password', 72)
 						.checkLength('>=', 8)
