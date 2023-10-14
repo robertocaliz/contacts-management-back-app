@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../../models';
+import { User } from '../../database/models';
 import UsersRepo from '../../repository/users-repo';
 import { StatusCodes } from 'http-status-codes';
 

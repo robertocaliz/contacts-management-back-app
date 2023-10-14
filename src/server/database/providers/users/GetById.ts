@@ -1,5 +1,6 @@
+import { Id } from '../../../types';
 import { User } from '../../models';
-import { Id } from '../../types';
+
 
 
 export const getById = async (id: Id): Promise<User> => {

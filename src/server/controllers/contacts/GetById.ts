@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Contact } from '../../models';
+import { Contact } from '../../database/models';
 import { ContactsRepo } from '../../repository';
 import { StatusCodes } from 'http-status-codes';
 
