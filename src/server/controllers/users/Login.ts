@@ -1,19 +1,19 @@
 import { Request, Response } from 'express';
-import UsersRepo from '../../repository/users-repo';
 import { User } from '../../database/models';
+import { UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
+import { UnauthorizedError } from '../../utils/errors';
 
 
 
 export const login = async (req: Request<{}, {}, Pick<User, 'email' | 'password'>>, res: Response) => {
-	const userCredentials = req.body;
-	const user = UsersRepo.getByEmail(userCredentials.email);
-	if (user && user.password === userCredentials.password) {
+	const { email, password } = req.body;
+	const user = await UsersProvider.getByEmail(email);
+	console.log(user);
+	if (user && user.password === password) {
 		return res
 			.status(StatusCodes.OK)
-			.json({ ...user, accessToken: 'accessToken' });
+			.json(user);
 	}
-	return res
-		.status(StatusCodes.UNAUTHORIZED)
-		.send();
+	throw new UnauthorizedError('Incorrect e-mail or password');
 };

@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 
 
 
@@ -14,23 +15,23 @@ export class AppError extends Error {
 
 
 export class DatabaseError extends AppError {
-	constructor(statusCode: number, message?: string, error?: Error) {
-		super(statusCode, message, error);
+	constructor(message?: string, error?: Error) {
+		super(StatusCodes.INTERNAL_SERVER_ERROR, message, error);
 	}
 }
 
 
 
 export class NotFoundError extends AppError {
-	constructor(statusCode: number, message?: string, error?: Error) {
-		super(statusCode, message, error);
+	constructor(message?: string, error?: Error) {
+		super(StatusCodes.NOT_FOUND, message, error);
 	}
 }
 
 
 
 export class UnauthorizedError extends AppError {
-	constructor(statusCode: number, message?: string, error?: Error) {
-		super(statusCode, message, error);
+	constructor(message?: string, error?: Error) {
+		super(StatusCodes.UNAUTHORIZED, message, error);
 	}
 }

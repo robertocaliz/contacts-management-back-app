@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
 import { User } from '../../database/models';
-import UsersRepo from '../../repository/users-repo';
+import { UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 
 
 export const signup = async (req: Request<{}, {}, User>, res: Response) => {
 	const user = req.body;
-	UsersRepo.add(user);
-	return res.status(StatusCodes.CREATED).send();
+	await UsersProvider
+		.create(user)
+		.then(userId => {
+			res.status(StatusCodes.CREATED).json(userId);
+		});
 };
