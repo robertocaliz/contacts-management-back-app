@@ -35,3 +35,11 @@ export class UnauthorizedError extends AppError {
 		super(StatusCodes.UNAUTHORIZED, message, error);
 	}
 }
+
+
+
+export class FieldNotFoundError extends AppError { 
+	constructor(message?: string, error?: Error) {
+		super(StatusCodes.INTERNAL_SERVER_ERROR, message, error);
+	}
+}
