@@ -1,11 +1,16 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { ContactsRepo } from '../../repository';
+import { ContactsProvider } from '../../database/providers';
 
 
 
 export const getAll = async (req: Request, res: Response) => {
-	res
+	const contacts = await ContactsProvider.getAll(
+		{
+			createdBy: Number(req.headers.userId)
+		}
+	);
+	return res
 		.status(StatusCodes.OK)
-		.json(ContactsRepo.getAll());
+		.json(contacts);
 };

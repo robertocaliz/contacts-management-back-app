@@ -5,6 +5,6 @@ export interface Contact {
 	id: number;
 	name: string;
 	phoneNumber: string;
-	email: string;
+	email?: string;
 	createdBy: number;
 }
