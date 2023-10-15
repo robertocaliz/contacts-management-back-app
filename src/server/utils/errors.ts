@@ -3,9 +3,9 @@ import { StatusCodes } from 'http-status-codes';
 
 
 export class AppError extends Error {
-	public statusCode: number;
+	public statusCode?: number;
 	public error?: Error;
-	constructor(statusCode: number, name: string, message?: string, error?: Error) {
+	constructor(name: string, statusCode?: number, message?: string, error?: Error) {
 		super(message);
 		this.statusCode = statusCode;
 		this.error = error;
@@ -17,7 +17,7 @@ export class AppError extends Error {
 
 export class DatabaseError extends AppError {
 	constructor(message?: string, error?: Error) {
-		super(StatusCodes.INTERNAL_SERVER_ERROR, 'DatabaseError', message, error);
+		super('DatabaseError', undefined, message, error);
 	}
 }
 
@@ -25,7 +25,7 @@ export class DatabaseError extends AppError {
 
 export class NotFoundError extends AppError {
 	constructor(message?: string, error?: Error) {
-		super(StatusCodes.NOT_FOUND, 'NotFoundError', message, error);
+		super('NotFoundError', StatusCodes.NOT_FOUND, message, error);
 	}
 }
 
@@ -33,7 +33,7 @@ export class NotFoundError extends AppError {
 
 export class UnauthorizedError extends AppError {
 	constructor(message?: string, error?: Error) {
-		super(StatusCodes.UNAUTHORIZED, 'UnauthorizedError', message, error);
+		super('UnauthorizedError', StatusCodes.UNAUTHORIZED, message, error);
 	}
 }
 
@@ -41,7 +41,7 @@ export class UnauthorizedError extends AppError {
 
 export class FieldNotFoundError extends AppError {
 	constructor(message?: string, error?: Error) {
-		super(StatusCodes.INTERNAL_SERVER_ERROR, 'FieldNotFoundError', message, error);
+		super('FieldNotFoundError', undefined, message, error);
 	}
 }
 
@@ -49,6 +49,6 @@ export class FieldNotFoundError extends AppError {
 
 export class EmptyArrayError extends AppError {
 	constructor(message?: string, error?: Error) {
-		super(StatusCodes.INTERNAL_SERVER_ERROR, 'EmptyArrayError', message, error);
+		super('EmptyArrayError', undefined, message, error);
 	}
 }
