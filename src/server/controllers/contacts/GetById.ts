@@ -5,9 +5,9 @@ import { StatusCodes } from 'http-status-codes';
 
 
 
-export const getById = async (req: Request<Pick<Contact, 'id'>>, res: Response) => {
-	const id = req.params.id;
-	const contact = ContactsRepo.getById(id);
+export const getById = async (req: Request<Partial<Contact>>, res: Response) => {
+	const { id: contactId } = req.params;
+	const contact = ContactsRepo.getById(contactId as number);
 	if (contact) {
 		return res.status(StatusCodes.OK)
 			.json(contact);

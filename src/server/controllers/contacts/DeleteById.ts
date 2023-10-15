@@ -5,9 +5,9 @@ import { StatusCodes } from 'http-status-codes';
 
 
 
-export const deleteById = async (req: Request<Pick<Contact, 'id'>>, res: Response) => {
-	const contactId = req.params.id;
-	ContactsRepo.deleteById(contactId);
+export const deleteById = async (req: Request<Partial<Contact>>, res: Response) => {
+	const { id: contactId } = req.params;
+	ContactsRepo.deleteById(contactId as number);
 	res
 		.status(StatusCodes.OK)
 		.send();
