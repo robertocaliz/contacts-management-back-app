@@ -1,9 +1,10 @@
 
 import * as Jwt from 'jsonwebtoken';
+import { User } from '../../database/models';
 
 
-interface IUserData {
-	userId: number;
+export interface IUserData extends Omit<Partial<User>, 'id'> {
+	userId?: number;
 }
 
 
