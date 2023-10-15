@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Contact } from '../../database/models';
-import { ContactsRepo } from '../../repository';
+import { ContactsProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 
 
@@ -8,8 +8,9 @@ import { StatusCodes } from 'http-status-codes';
 
 export const create = async (req: Request<{}, {}, Contact>, res: Response) => {
 	const contact = req.body;
-	const contactId = ContactsRepo.save(contact);
-	res
-		.status(StatusCodes.CREATED)
-		.json(contactId);
+	await ContactsProvider
+		.create(contact)
+		.then(contactId => {
+			res.status(StatusCodes.CREATED).json(contactId);
+		});
 };
