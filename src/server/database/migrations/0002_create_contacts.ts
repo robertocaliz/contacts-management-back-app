@@ -30,6 +30,7 @@ export const up = async (knex: Knex) => {
 						.checkRegex(REGEX.db.phoneNumber);
 					table
 						.integer('createdBy')
+						.index()
 						.unsigned();
 					table
 						.foreign('createdBy')
