@@ -2,7 +2,5 @@ import { IUserData } from '../shared/services';
 
 
 declare module 'http' {
-	interface IncomingHttpHeaders {
-		userData: IUserData
-	}
+	interface IncomingHttpHeaders extends IUserData { }
 }

@@ -6,11 +6,13 @@ import { NotFoundError } from '../../utils/errors';
 
 
 
-export const getById = async (req: Request<User>, res: Response) => {
-	const userId = req.params.id;
-	const user = await UsersProvider.getById(userId);
+export const getById = async (req: Request<Partial<User>>, res: Response) => {
+	const { id: userId } = req.params;
+	const user = await UsersProvider.getById(userId as number);
 	if (user) {
-		return res.status(StatusCodes.OK).json(user);
+		return res
+			.status(StatusCodes.OK)
+			.json(user);
 	}
 	throw new NotFoundError('User not found!');
 };

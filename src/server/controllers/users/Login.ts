@@ -13,7 +13,7 @@ export const login = async (req: Request<{}, {}, Pick<User, 'email' | 'password'
 	const user = await UsersProvider.getByEmail(email);
 	if (user && await PasswordService.equals(password, user.password)) {
 		deleteObjField(user, ['password']);
-		const accessToken = JWTService.sign({ userId: user.id });
+		const accessToken = JWTService.sign({ userId: String(user.id) });
 		return res
 			.status(StatusCodes.OK)
 			.json(
