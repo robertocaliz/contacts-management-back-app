@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
 import { Contact } from '../../database/models';
-import { ContactsRepo } from '../../repository';
 import { StatusCodes } from 'http-status-codes';
+import { ContactsProvider } from '../../database/providers';
+import { NotFoundError } from '../../utils/errors';
 
 
 
 export const getById = async (req: Request<Partial<Contact>>, res: Response) => {
 	const { id: contactId } = req.params;
-	const contact = ContactsRepo.getById(contactId as number);
+	const contact = await ContactsProvider.getById(contactId as number);
 	if (contact) {
 		return res.status(StatusCodes.OK)
 			.json(contact);
 	}
-	return res.status(StatusCodes.NOT_FOUND)
-		.send();
+	throw new NotFoundError('Contact not found!');
 };

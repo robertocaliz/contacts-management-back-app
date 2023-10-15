@@ -9,8 +9,10 @@ import { StatusCodes } from 'http-status-codes';
 export const create = async (req: Request<{}, {}, Contact>, res: Response) => {
 	const contact = req.body;
 	await ContactsProvider
-		.create(contact)
+		.create({ ...contact, createdBy: Number(req.headers.userId) })
 		.then(contactId => {
-			res.status(StatusCodes.CREATED).json(contactId);
+			res
+				.status(StatusCodes.CREATED)
+				.json(contactId);
 		});
 };
