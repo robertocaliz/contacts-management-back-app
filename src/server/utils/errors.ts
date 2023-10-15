@@ -44,3 +44,11 @@ export class FieldNotFoundError extends AppError {
 		super(StatusCodes.INTERNAL_SERVER_ERROR, 'FieldNotFoundError', message, error);
 	}
 }
+
+
+
+export class EmptyArrayError extends AppError {
+	constructor(message?: string, error?: Error) {
+		super(StatusCodes.INTERNAL_SERVER_ERROR, 'EmptyArrayError', message, error);
+	}
+}
