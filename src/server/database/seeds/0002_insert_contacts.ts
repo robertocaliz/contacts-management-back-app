@@ -15,42 +15,46 @@ const phoneNumberGenerator = getUniqueMozambiquePhoneNumberGenerator();
 
 
 
-function generateUniqueEmail(existingEmails: Set<string>) {
-	let email;
-	do {
-		email = `user${Math.floor(1000 + Math.random() * 9000)}@example.com`;
-	} while (existingEmails.has(email));
-	existingEmails.add(email);
-	return email;
+function* getUniqueEmailGenerator() {
+	let count = 0;
+	while (true) {
+		yield `contact.email${++count}@gmail.com`;
+	}
 }
 
 
+const uniqueEmailGenerator = getUniqueEmailGenerator();
+
+
 function generateContacts(limit: number) {
-	const objectArray = [];
-	const existingEmails = new Set<string>();
+
+	const contacts = [];
 
 	for (let i = 0; i < limit; i++) {
-		const email = generateUniqueEmail(existingEmails);
+
+		const email = uniqueEmailGenerator.next().value;
 		const phoneNumber = phoneNumberGenerator.next().value;
 
-		const object = {
+		const contact = {
 			name: `Name ${i}`,
 			email: email,
 			phoneNumber: phoneNumber,
 			createdBy: i % 2 === 0 ? 1 : 2,
 		};
-		objectArray.push(object);
+		contacts.push(contact);
 	}
-	return objectArray;
+	return contacts;
 }
 
 export const seed = async () => {
 
+	const LIMIT = 1000;
+
 	const [{ count }] = await __knex(TABLE_NAMES.contacts)
 		.count({ count: 'id' });
+
 	if (count === 0) {
-		const contacts = generateContacts(100);
-		console.log(contacts);
+		const contacts = generateContacts(LIMIT);
 		await __knex
 			.insert(contacts)
 			.into(TABLE_NAMES.contacts)
