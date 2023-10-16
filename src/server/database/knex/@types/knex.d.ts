@@ -9,3 +9,10 @@ declare module 'knex/types/tables' {
 	}
 
 }
+
+
+declare module 'knex/types/result' {
+	interface Registry {
+		Count: number;
+	}
+}

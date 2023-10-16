@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
-    "knex": "knex"
+    "knex": "knex",
+	"seed": "npx knex --knexfile ./src/server/database/knex/Environments.ts seed:run"
   },
   "keywords": [],
   "author": "",
