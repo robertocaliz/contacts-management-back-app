@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "ts-node-dev ./src/index.ts",
 		"knex": "knex",
-		"seed": "npx knex --knexfile ./src/server/database/knex/Environments.ts seed:run",
+		"seeds": "npx knex --knexfile ./src/server/database/knex/Environments.ts seed:run",
 		"migrate:latest": "npx knex --knexfile ./src/server/database/knex/Environments.ts migrate:latest",
 		"migrate:rollback": "npx knex --knexfile ./src/server/database/knex/Environments.ts migrate:rollback --all"
 	},
