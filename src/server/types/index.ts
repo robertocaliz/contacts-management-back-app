@@ -13,3 +13,7 @@ export type GetAllProps = {
 	filter?: string
 	criteria?: string;
 }
+
+
+
+export interface QueryProps extends Omit<GetAllProps, 'createdBy'> { }

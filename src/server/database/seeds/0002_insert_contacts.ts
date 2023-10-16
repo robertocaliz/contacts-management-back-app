@@ -51,7 +51,7 @@ export const seed = async () => {
 	const LIMIT = 1000;
 
 	const [{ count }] = await __knex(TABLE_NAMES.contacts)
-		.count({ count: 'id' });
+		.count({ count: '*' });
 
 	if (count === 0) {
 		const contacts = generateContacts(LIMIT);
