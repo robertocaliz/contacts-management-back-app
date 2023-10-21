@@ -21,6 +21,7 @@ export const up = async (knex: Knex) => {
 					table
 						.integer('userId')
 						.unsigned()
+						.index()
 						.unique();
 					table
 						.foreign('userId')
