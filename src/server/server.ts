@@ -19,6 +19,7 @@ server.use(cors({
 
 server.use(AppRoutes.contactRoutes);
 server.use(AppRoutes.userRoutes);
+server.use(AppRoutes.refreshTokenRoutes);
 
 
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../../database/models';
-import { UsersProvider } from '../../database/providers';
+import { RefreshTokensProvider, UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 import { UnauthorizedError } from '../../utils/errors';
 import { JWTService, PasswordService } from '../../shared/services';
@@ -14,12 +14,15 @@ export const login = async (req: Request<{}, {}, Pick<User, 'email' | 'password'
 	if (user && await PasswordService.equals(password, user.password)) {
 		deleteObjField(user, ['password']);
 		const accessToken = JWTService.sign({ userId: String(user.id) });
+		await RefreshTokensProvider.deleteByUserId(user.id);
+		const refreshToken = await RefreshTokensProvider.create(user.id);
 		return res
 			.status(StatusCodes.OK)
 			.json(
 				{
 					...user,
-					accessToken
+					accessToken,
+					refreshToken
 				}
 			);
 	}

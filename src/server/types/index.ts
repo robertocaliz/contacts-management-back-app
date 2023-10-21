@@ -17,3 +17,10 @@ export type GetAllProps = {
 
 
 export interface QueryProps extends Omit<GetAllProps, 'createdBy'> { }
+
+
+
+
+export type RefreshTokenObj = {
+	refreshToken: string;
+}

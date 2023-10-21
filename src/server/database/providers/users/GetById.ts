@@ -9,7 +9,7 @@ import { User } from '../../models';
 export const getById = async (id: Id): Promise<User> => {
 	try {
 		const [user] = await __knex
-			.select(['name', 'email'])
+			.select(['id','name', 'email'])
 			.from(TABLE_NAMES.users)
 			.where({ id });
 		return user;

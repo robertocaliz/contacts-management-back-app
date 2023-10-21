@@ -3,7 +3,8 @@
 
 export const TABLE_NAMES = Object.freeze({
 	users: 'users',
-	contacts: 'contacts'
+	contacts: 'contacts',
+	refreshTokens: 'refresh_tokens'
 });
 
 
