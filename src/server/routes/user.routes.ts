@@ -10,6 +10,7 @@ userRoutes.post('/signup', UsersController.signup);
 userRoutes.post('/login', UsersController.login);
 userRoutes.get('/users/:id', ensureAuthenticated, UsersController.getById);
 userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById);
+userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
 
 
 export { userRoutes };
