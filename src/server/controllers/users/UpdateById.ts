@@ -9,7 +9,7 @@ export const updateById = async (req: Request<Partial<User>, {}, User>, res: Res
 	const { id: userId } = req.params;
 	const user = req.body;
 	await UsersProvider
-		.updateById(user, userId as number)
+		.updateById(user, String(userId))
 		.then(() => {
 			res
 				.status(StatusCodes.OK)

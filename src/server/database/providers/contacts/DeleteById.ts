@@ -1,22 +1,26 @@
-import { TABLE_NAMES } from '../../../constants';
 import { Id } from '../../../types';
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
+import userModel from '../../models/User';
 
 
-const message = 'Error trying to delete contact!';
+
+const errorMessage = 'Error deleting contact.';
 
 
-export const deleteById = async (id: Id) => {
+
+export const deleteById = async (contactId: Id, loggedUserId: Id) => {
 	try {
-		const numberOfAffectedRows = await __knex
-			.del()
-			.from(TABLE_NAMES.contacts)
-			.where({ id });
-		if (numberOfAffectedRows === 0) {
-			throw new DatabaseError(message);
+		const result = await userModel.updateOne({ _id: loggedUserId }, {
+			$pull: {
+				contacts: {
+					_id: contactId
+				}
+			}
+		});
+		if (result.modifiedCount === 0) {
+			throw new DatabaseError(errorMessage);
 		}
 	} catch (error) {
-		throw new DatabaseError(message, error as Error);
+		throw new DatabaseError(errorMessage, error as Error);
 	}
 };

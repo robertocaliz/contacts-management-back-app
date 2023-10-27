@@ -1,19 +1,15 @@
-import { TABLE_NAMES } from '../../../constants';
-import { Id } from '../../../types';
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
-import { User } from '../../models';
+import userModel, { User } from '../../models/User';
 
 
-export const create = async (user: Omit<User, 'accessToken'>): Promise<Id> => {
+
+export const create = async (user: Omit<User, 'accessToken'>) => {
 	try {
-		const [id] = await __knex
-			.insert(user)
-			.into(TABLE_NAMES.users);
-		return id;
+		const userCreated = await userModel.create(user);
+		return userCreated._id;
 	} catch (error) {
 		throw new DatabaseError(
-			'Error trying to create user!',
+			'Error creating user!',
 			error as Error
 		);
 	}

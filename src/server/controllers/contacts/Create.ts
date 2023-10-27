@@ -7,12 +7,13 @@ import { StatusCodes } from 'http-status-codes';
 
 
 export const create = async (req: Request<{}, {}, Contact>, res: Response) => {
-	const contact = req.body;
+	const { loggedUserId } = req.headers;
+	const contact = { ...req.body };
 	await ContactsProvider
-		.create({ ...contact, createdBy: Number(req.headers.userId) })
-		.then(contactId => {
+		.create(contact, loggedUserId as string)
+		.then(() => {
 			res
 				.status(StatusCodes.CREATED)
-				.json(contactId);
+				.json();
 		});
 };

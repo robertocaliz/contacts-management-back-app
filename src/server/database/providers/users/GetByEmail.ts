@@ -1,21 +1,15 @@
-import { TABLE_NAMES } from '../../../constants';
+
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
-import { User } from '../../models';
+import userModel from '../../models/User';
 
 
-
-
-export const getByEmail = async (email: string): Promise<User> => {
+export const getByEmail = async (email: string) => {
 	try {
-		const [user] = await __knex
-			.select(['id', 'name', 'email', 'password'])
-			.from(TABLE_NAMES.users)
-			.where({ email });
+		const user = await userModel.findOne({ email });
 		return user;
 	} catch (error) {
 		throw new DatabaseError(
-			'Error trying to get user!',
+			'Error loading user.',
 			error as Error
 		);
 	}

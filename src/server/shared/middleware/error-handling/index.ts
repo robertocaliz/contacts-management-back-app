@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { AppError } from '../../../utils/errors';
+import { ApiError } from '../../../utils/errors';
 
 
 
@@ -12,7 +12,7 @@ const logError = (err: Error) => {
 
 
 export const errorLogger = (
-	err: Error & AppError,
+	err: Error & ApiError,
 	req: Request,
 	res: Response,
 	next: NextFunction
@@ -24,7 +24,7 @@ export const errorLogger = (
 
 
 export const returnError = (
-	err: Error & AppError,
+	err: Error & ApiError,
 	req: Request,
 	res: Response,
 	next: NextFunction

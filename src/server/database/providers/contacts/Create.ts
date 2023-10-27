@@ -1,21 +1,23 @@
-import { TABLE_NAMES } from '../../../constants';
-import { Id } from '../../../types';
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
 import { Contact } from '../../models';
+import userModel from '../../models/User';
+
+
+const errMessage = 'Error creating contact.';
 
 
 
-export const create = async (contact: Contact): Promise<Id> => {
+export const create = async (contact: Contact, loggedUserId: string) => {
 	try {
-		const [id] = await __knex
-			.insert(contact)
-			.into(TABLE_NAMES.contacts);
-		return id;
+		const result = await userModel.updateOne({ _id: loggedUserId }, {
+			$push: {
+				contacts: contact
+			}
+		});
+		if (result.modifiedCount === 0) {
+			throw new DatabaseError(errMessage);
+		}
 	} catch (error) {
-		throw new DatabaseError(
-			'Error trying to create contact!',
-			error as Error
-		);
+		throw new DatabaseError(errMessage, error as Error);
 	}
 };

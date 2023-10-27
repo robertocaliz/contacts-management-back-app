@@ -1,13 +1,11 @@
 
 
-
-export type Id = number;
+export type Id = string;
 
 
 
 
 export type GetAllProps = {
-	createdBy: Id;
 	limit?: number;
 	page?: number;
 	filter?: string

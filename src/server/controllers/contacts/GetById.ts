@@ -8,10 +8,11 @@ import { NotFoundError } from '../../utils/errors';
 
 export const getById = async (req: Request<Partial<Contact>>, res: Response) => {
 	const { id: contactId } = req.params;
-	const contact = await ContactsProvider.getById(contactId as number);
+	const { loggedUserId } = req.headers;
+	const contact = await ContactsProvider.getById(contactId as string, loggedUserId as string);
 	if (contact) {
 		return res.status(StatusCodes.OK)
 			.json(contact);
 	}
-	throw new NotFoundError('Contact not found!');
+	throw new NotFoundError('Contact not found.');
 };

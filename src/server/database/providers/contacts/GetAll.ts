@@ -1,32 +1,18 @@
-import { TABLE_NAMES } from '../../../constants';
 import { GetAllProps } from '../../../types';
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
-import { Contact } from '../../models';
+import userModel from '../../models/User';
 
 
 
-export const getAll = async ({
-	createdBy,
-	page = 1,
-	limit = 20,
-	filter = '',
-	criteria = 'name'
-}: GetAllProps): Promise<Array<Contact>> => {
+export const getAll = async (loggedUserId: string, { page = 1, limit = 2 }: GetAllProps) => {
+	const offset = (page - 1) * limit;
+	limit = (page == 1) ? limit : (limit * 2);
 	try {
-		const contacts = await __knex
-			.select('*')
-			.from(TABLE_NAMES.contacts)
-			.where({ createdBy })
-			.andWhere(criteria, 'like', `%${filter}%`)
-			.orderBy('name')
-			.limit(limit)
-			.offset((page - 1) * limit);
+		const [{ contacts }] = await userModel.find({ _id: loggedUserId }, {
+			contacts: { $slice: [offset, limit] }
+		});
 		return contacts;
 	} catch (error) {
-		throw new DatabaseError(
-			'Error trying to load contacts!',
-			error as Error
-		);
+		throw new DatabaseError('Error loading contacts.', error as Error);
 	}
 };

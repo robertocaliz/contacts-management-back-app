@@ -1,19 +1,14 @@
-import { TABLE_NAMES } from '../../../constants';
-import { Id } from '../../../types';
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
-import { User } from '../../models';
+import userModel, { User } from '../../models/User';
 
 
-const message = 'Error trying to update user!';
+const message = 'Error updating user!';
 
 
-export const updateById = async (user: User, id: Id) => {
+export const updateById = async (user: User, userId: string) => {
 	try {
-		const numberOfAffectedRows = await __knex(TABLE_NAMES.users)
-			.update(user)
-			.where({ id });
-		if (numberOfAffectedRows === 0) {
+		const result = await userModel.findByIdAndUpdate(userId, user);
+		if (!result?.isModified) {
 			throw new DatabaseError(message);
 		}
 	} catch (error) {

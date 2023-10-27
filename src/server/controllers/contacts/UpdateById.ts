@@ -9,8 +9,9 @@ import { ContactsProvider } from '../../database/providers';
 export const updateById = async (req: Request<Pick<Contact, 'id'>, {}, Contact>, res: Response) => {
 	const contactId = req.params.id;
 	const contact = req.body;
+	const { loggedUserId } = req.headers;
 	await ContactsProvider
-		.updateById(contact, contactId)
+		.updateById({ ...contact, id: contactId }, loggedUserId as string)
 		.then(() => {
 			res
 				.status(StatusCodes.OK)

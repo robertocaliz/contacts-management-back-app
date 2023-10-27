@@ -1,21 +1,14 @@
-import { TABLE_NAMES } from '../../../constants';
+
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
+import refreshTokenModel from '../../models/RefreshToken';
 
-
-const message = 'Error while deleting refresh token.';
 
 
 export const deleteById = async (id: string) => {
 	try {
-		const numberOfAffectedRows = await __knex
-			.del()
-			.from(TABLE_NAMES.refreshTokens)
-			.where({ id });
-		if (numberOfAffectedRows === 0) {
-			throw new DatabaseError(message);
-		}
+		const deletedRefreshToken = await refreshTokenModel.findByIdAndDelete(id);
+		return deletedRefreshToken?._id;
 	} catch (error) {
-		throw new DatabaseError(message, error as Error);
+		throw new DatabaseError('Error deleting refresh token.', error as Error);
 	}
 };

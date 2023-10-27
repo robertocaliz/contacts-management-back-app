@@ -4,7 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import { AppRoutes } from './routes';
 import { errorLogger, returnError } from './shared/middleware/error-handling';
-
+import './database/mongodb';
 
 const server = express();
 

@@ -8,7 +8,7 @@ import { NotFoundError } from '../../utils/errors';
 
 export const getById = async (req: Request<Partial<User>>, res: Response) => {
 	const { id: userId } = req.params;
-	const user = await UsersProvider.getById(userId as number);
+	const user = await UsersProvider.getById(String(userId));
 	if (user) {
 		return res
 			.status(StatusCodes.OK)

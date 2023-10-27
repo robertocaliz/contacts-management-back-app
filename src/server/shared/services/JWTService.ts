@@ -3,7 +3,7 @@ import * as Jwt from 'jsonwebtoken';
 
 
 export interface IUserData {
-	userId?: string;
+	loggedUserId?: string;
 }
 
 

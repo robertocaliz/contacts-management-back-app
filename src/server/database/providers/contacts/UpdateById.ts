@@ -1,22 +1,30 @@
-import { TABLE_NAMES } from '../../../constants';
-import { Id } from '../../../types';
 import { DatabaseError } from '../../../utils/errors';
-import { __knex } from '../../knex';
 import { Contact } from '../../models';
+import userModel from '../../models/User';
 
 
-const message = 'Error trying to update contact!';
+const errorMessage = 'Error updating contact.';
 
 
-export const updateById = async (contact: Contact, id: Id) => {
+export const updateById = async (contact: Contact, loggedUserId: string) => {
 	try {
-		const numberOfAffectedRows = await __knex(TABLE_NAMES.contacts)
-			.update(contact)
-			.where({ id });
-		if (numberOfAffectedRows === 0) {
-			throw new DatabaseError(message);
+		const result = await userModel.updateOne(
+			{
+				_id: loggedUserId,
+				contacts: { $elemMatch: { _id: contact.id } }
+			},
+			{
+				$set: {
+					'contacts.$.name': contact.name,
+					'contacts.$.email': contact.email,
+					'contacts.$.phoneNumber': contact.phoneNumber
+				}
+			}
+		);
+		if (result.modifiedCount === 0) {
+			throw new DatabaseError(errorMessage);
 		}
 	} catch (error) {
-		throw new DatabaseError(message, error as Error);
+		throw new DatabaseError(errorMessage, error as Error);
 	}
 };
