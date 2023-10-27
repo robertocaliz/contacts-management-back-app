@@ -5,9 +5,8 @@ import { REGEX } from '../../constants';
 export interface Contact {
 	id: string;
 	name: string;
-	phoneNumber: string;
 	email?: string;
-	createdBy?: number;
+	phoneNumber: string;
 }
 
 
