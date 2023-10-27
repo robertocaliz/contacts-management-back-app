@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 
 
-const { USER, PASSWORD } = process.env;
+const databaseUri = process.env.DATABASE_URI as string;
 
 
 const connection = async () => {
 	await mongoose
-		.connect(`mongodb+srv://${USER}:${PASSWORD}@cluster0.ipyyfsl.mongodb.net/?retryWrites=true&w=majority`)
+		.connect(databaseUri)
 		.then(() => {
 			console.log('connection established with the database!');
 		})

@@ -4,7 +4,7 @@ import userModel from '../../models/User';
 
 
 
-export const getAll = async (loggedUserId: string, { page = 1, limit = 2 }: GetAllProps) => {
+export const getAll = async (loggedUserId: string, { page = 1, limit = 10 }: GetAllProps) => {
 	const offset = (page - 1) * limit;
 	limit = (page == 1) ? limit : (limit * 2);
 	try {
