@@ -58,3 +58,10 @@ export class ConflictError extends ApiError {
 		super('ConflictError', StatusCodes.CONFLICT, message, error);
 	}
 }
+
+
+export class RefreshTokenError extends ApiError {
+	constructor(message?: string, error?: Error) {
+		super('RefreshTokenError', undefined, message, error);
+	}
+}
