@@ -30,10 +30,11 @@ export const returnError = (
 	next: NextFunction
 ) => {
 	const statusCode = err.statusCode ?? StatusCodes.INTERNAL_SERVER_ERROR;
-	const message = err.statusCode ? err.message : 'Error trying to process your request!';
+	const message = err.statusCode ? err.message : 'Error processing your request.';
 	res
 		.status(statusCode)
 		.json({
+			errors: err.errors,
 			error: message
 		});
 	next();

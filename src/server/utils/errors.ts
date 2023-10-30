@@ -5,11 +5,13 @@ import { StatusCodes } from 'http-status-codes';
 export class ApiError extends Error {
 	public statusCode?: number;
 	public error?: Error;
-	constructor(name: string, statusCode?: number, message?: string, error?: Error) {
+	public errors?: object;
+	constructor(name: string, statusCode?: number, message?: string, error?: Error, errors?: object) {
 		super(message);
 		this.statusCode = statusCode;
 		this.error = error;
 		this.name = name;
+		this.errors = errors;
 	}
 }
 
@@ -54,8 +56,8 @@ export class EmptyArrayError extends ApiError {
 
 
 export class ConflictError extends ApiError {
-	constructor(message?: string, error?: Error) {
-		super('ConflictError', StatusCodes.CONFLICT, message, error);
+	constructor(message?: string, errors?: object) {
+		super('ConflictError', StatusCodes.CONFLICT, message, undefined, errors);
 	}
 }
 
