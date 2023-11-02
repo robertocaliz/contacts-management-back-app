@@ -67,3 +67,10 @@ export class RefreshTokenError extends ApiError {
 		super('RefreshTokenError', undefined, message, error);
 	}
 }
+
+
+export class ForbiddenError extends ApiError {
+	constructor(message?: string, error?: Error) {
+		super('RefreshTokenError', StatusCodes.FORBIDDEN, message, error);
+	}
+}

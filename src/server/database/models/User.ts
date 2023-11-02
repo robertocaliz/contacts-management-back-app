@@ -13,6 +13,7 @@ export interface User {
 	accessToken?: string;
 	refreshToken?: string;
 	activationToken?: string;
+	status?: string;
 }
 
 
