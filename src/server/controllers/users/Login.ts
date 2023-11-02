@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { User } from '../../database/models';
 import { RefreshTokensProvider, UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
@@ -8,7 +8,10 @@ import { USER_STATUS } from '../../constants';
 
 
 
-export const login = async (req: Request<{}, {}, Pick<User, 'email' | 'password'>>, res: Response) => {
+export const login = async (
+	req: Request<{}, {}, Pick<User, 'email' | 'password'>>,
+	res: Response,
+	next: NextFunction) => {
 
 	const { email, password } = req.body;
 	const user = await UsersProvider.getByEmail(email);
@@ -16,7 +19,7 @@ export const login = async (req: Request<{}, {}, Pick<User, 'email' | 'password'
 	if (user && await PasswordService.equals(password, user.password)) {
 
 		if (user?.status === USER_STATUS.Inactive) {
-			throw new ForbiddenError();
+			return next(new ForbiddenError());
 		}
 
 		const accessToken = JWTService.sign({ loggedUserId: user.id });

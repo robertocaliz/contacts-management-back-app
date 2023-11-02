@@ -8,7 +8,7 @@ const userRoutes = Router();
 
 
 userRoutes.post('/signup', UsersController.signup, sendSignupConfirmationEmail);
-userRoutes.post('/login', UsersController.login);
+userRoutes.post('/login', UsersController.login, sendSignupConfirmationEmail);
 userRoutes.get('/users/:id', ensureAuthenticated, UsersController.getById);
 userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
