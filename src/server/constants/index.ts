@@ -16,3 +16,11 @@ export const REGEX = Object.freeze({
 		phoneNumber: /^(\+258)?[28]\d{8}$/
 	}
 });
+
+
+
+
+export const USER_STATUS = Object.freeze({
+	Active: 'Active',
+	Inactive: 'Inactive'
+});

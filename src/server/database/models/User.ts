@@ -1,6 +1,6 @@
 
 import { Schema, model } from 'mongoose';
-import { REGEX } from '../../constants';
+import { REGEX, USER_STATUS } from '../../constants';
 import { contactsSchema } from './Contact';
 
 
@@ -12,6 +12,7 @@ export interface User {
 	password: string;
 	accessToken?: string;
 	refreshToken?: string;
+	activationToken?: string;
 }
 
 
@@ -37,7 +38,13 @@ const usersSchema = new Schema({
 		min: 8,
 		max: 72
 	},
-	contacts: [contactsSchema]
+	contacts: [contactsSchema],
+	status: {
+		type: String,
+		required: true,
+		enum: Object.values(USER_STATUS),
+		default: USER_STATUS.Inactive
+	}
 }, {
 	timestamps: true
 });
