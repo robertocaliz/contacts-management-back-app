@@ -9,20 +9,20 @@ import { USER_STATUS } from '../../constants';
 
 
 export const login = async (req: Request<{}, {}, Pick<User, 'email' | 'password'>>, res: Response) => {
-	
+
 	const { email, password } = req.body;
 	const user = await UsersProvider.getByEmail(email);
 
-	if (user?.status === USER_STATUS.Inactive) { 
-		throw new ForbiddenError();
-	}
-
 	if (user && await PasswordService.equals(password, user.password)) {
-		
+
+		if (user?.status === USER_STATUS.Inactive) {
+			throw new ForbiddenError();
+		}
+
 		const accessToken = JWTService.sign({ loggedUserId: user.id });
 		await RefreshTokensProvider.deleteByUserId(user.id);
 		const refreshToken = await RefreshTokensProvider.create(user.id);
-		
+
 		return res
 			.status(StatusCodes.OK)
 			.json(
