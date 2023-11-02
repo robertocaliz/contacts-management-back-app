@@ -18,9 +18,11 @@ export const login = async (req: Request<{}, {}, Pick<User, 'email' | 'password'
 	}
 
 	if (user && await PasswordService.equals(password, user.password)) {
+		
 		const accessToken = JWTService.sign({ loggedUserId: user.id });
 		await RefreshTokensProvider.deleteByUserId(user.id);
 		const refreshToken = await RefreshTokensProvider.create(user.id);
+		
 		return res
 			.status(StatusCodes.OK)
 			.json(
