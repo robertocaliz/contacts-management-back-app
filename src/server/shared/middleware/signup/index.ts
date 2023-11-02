@@ -1,16 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
 import { sendMail } from '../../../functions/email';
 import { renderFile } from '../../../functions/ejs';
 import path from 'path';
-import { ForbiddenError } from '../../../utils/errors';
+import { InactiveUserError } from '../../../utils/errors';
+import { StatusCodes } from 'http-status-codes';
 
 
 export const sendSignupConfirmationEmail = async (
-	err: ForbiddenError,
+	err: InactiveUserError,
 	req: Request,
-	res: Response,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	_res: Response,
 	next: NextFunction
 ) => {
 
@@ -22,14 +21,17 @@ export const sendSignupConfirmationEmail = async (
 	});
 
 	await sendMail(user.email, html)
-		.then(() => {
-			
-			if (err) throw err;
-			
-			res
-				.status(StatusCodes.CREATED)
-				.json({
-					emailSend: true
-				});
-		});
+		.then(() => next(err));
+};
+
+
+export const returnResponse = (
+	req: Request,
+	res: Response,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	next: NextFunction
+) => {
+	res
+		.status(StatusCodes.CREATED)
+		.json({ emailSend: true });
 };

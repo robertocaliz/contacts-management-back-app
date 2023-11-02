@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import { UsersController } from '../controllers';
 import { ensureAuthenticated } from '../shared/middleware/auth';
-import { sendSignupConfirmationEmail } from '../shared/middleware/signup';
+import { returnResponse, sendSignupConfirmationEmail } from '../shared/middleware/signup';
+import { throwInactiveUserError } from '../shared/middleware/login';
 
 
 const userRoutes = Router();
 
 
-userRoutes.post('/signup', UsersController.signup, sendSignupConfirmationEmail);
-userRoutes.post('/login', UsersController.login, sendSignupConfirmationEmail);
+userRoutes.post('/signup', UsersController.signup, sendSignupConfirmationEmail, returnResponse);
+userRoutes.post('/login', UsersController.login, sendSignupConfirmationEmail, throwInactiveUserError);
 userRoutes.get('/users/:id', ensureAuthenticated, UsersController.getById);
 userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
