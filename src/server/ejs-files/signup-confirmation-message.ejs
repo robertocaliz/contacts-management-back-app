@@ -1,0 +1,41 @@
+<html>
+
+<head>
+	<style>
+		body {
+			opacity: 0.8;
+			font-size: larger;
+			font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+			padding: 2rem;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<header>
+			<span>
+				Olá
+				<strong>
+					<%= user.name %>!
+				</strong>
+			</span>
+		</header>
+		<br />
+		<main>
+			<p>Parabens, você se cadastrou na <strong>ContactsPro</strong>!</p>
+			<p>Para concluir o cadastro e habilitar a sua conta, clique no link abaixo.</p>
+			<a href="#">http://localhost:5000/signup/activate/<%= user.id %></a>
+			<p>Caso não tenha conhecimento desse email, ignore-o.</p>
+		</main>
+		<br />
+		<footer>
+			<span>
+				Cordialmente, <br />
+				<strong>ContactsPro</strong>
+			</span>
+		</footer>
+	</div>
+</body>
+
+</html>
