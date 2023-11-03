@@ -22,3 +22,11 @@ export interface QueryProps extends Omit<GetAllProps, 'createdBy'> { }
 export type RefreshTokenObj = {
 	refreshToken: string;
 }
+
+
+
+export interface Token {
+	_id?: string;
+	expiresIn?: number;
+	userId: number;
+}

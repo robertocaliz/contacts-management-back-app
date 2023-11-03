@@ -1,16 +1,14 @@
 
 import { Schema, model, Types } from 'mongoose';
-
-
-export interface RefreshToken {
-	id: string;
-	expiresIn: number;
-	userId: number;
-}
+import { Token } from '../../types';
 
 
 
-const refreshTokensSchema = new Schema({
+export interface RefreshToken extends Token { }
+
+
+
+const refreshTokenSchema = new Schema({
 	expiresIn: {
 		type: Number,
 		required: true
@@ -25,7 +23,7 @@ const refreshTokensSchema = new Schema({
 
 
 
-const refreshTokenModel = model('refresh_tokens', refreshTokensSchema);
+const refreshTokenModel = model('refresh_token', refreshTokenSchema);
 
 
 export default refreshTokenModel;

@@ -3,7 +3,7 @@ import { RefreshTokensProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 import { JWTService } from '../../shared/services';
 import { RefreshTokenObj } from '../../types';
-import { expired } from '../../functions/refresh-token';
+import { expired } from '../../functions/time';
 import { RefreshTokenError } from '../../utils/errors';
 
 

@@ -1,5 +1,5 @@
 
-import { getExpirationTime } from '../../../functions/refresh-token';
+import { getExpirationTime } from '../../../functions/time';
 import { DatabaseError } from '../../../utils/errors';
 import refreshTokenModel from '../../models/RefreshToken';
 
