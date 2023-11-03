@@ -1,26 +1,32 @@
 
 import { Schema, model, Types } from 'mongoose';
 import { Token } from '../../types';
+import { getRandomUUID } from '../../functions/uuid';
+import { getExpirationTime } from '../../functions/time';
 
 
 
 export interface RefreshToken extends Token { }
 
 
-
-const refreshTokenSchema = new Schema({
+export const refreshTokenSchemaBody = {
+	_id: {
+		type: String,
+		required: true,
+		default: getRandomUUID
+	},
 	expiresIn: {
 		type: Number,
-		required: true
+		required: true,
+		default: getExpirationTime
 	},
 	userId: {
 		type: Types.ObjectId,
 		required: true
 	}
-}, {
-	timestamps: true
-});
+};
 
+const refreshTokenSchema = new Schema(refreshTokenSchemaBody);
 
 
 const refreshTokenModel = model('refresh_token', refreshTokenSchema);
