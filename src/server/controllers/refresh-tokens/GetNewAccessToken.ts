@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { RefreshTokensProvider } from '../../database/providers';
+import { RefreshTokenProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 import { JWTService } from '../../shared/services';
 import { RefreshTokenObj } from '../../types';
@@ -9,7 +9,7 @@ import { RefreshTokenError } from '../../utils/errors';
 
 export const getNewAccessToken = async (req: Request<{}, {}, RefreshTokenObj>, res: Response) => {
 
-	const { getById, deleteById, create } = RefreshTokensProvider;
+	const { getById, deleteById, create } = RefreshTokenProvider;
 
 	const refreshTokenObj = req.body;
 

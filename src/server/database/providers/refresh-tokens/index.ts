@@ -5,7 +5,7 @@ import { getById } from './GetById';
 import { deleteByUserId } from './DeleteByUserId';
 
 
-export const RefreshTokensProvider = {
+export const RefreshTokenProvider = {
 	create,
 	getById,
 	deleteById,

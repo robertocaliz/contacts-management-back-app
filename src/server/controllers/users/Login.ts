@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { User } from '../../database/models';
-import { RefreshTokensProvider, UsersProvider } from '../../database/providers';
+import { RefreshTokenProvider, UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 import { InactiveUserError, UnauthorizedError } from '../../utils/errors';
 import { JWTService, PasswordService } from '../../shared/services';
@@ -23,8 +23,8 @@ export const login = async (
 		}
 
 		const accessToken = JWTService.sign({ loggedUserId: user.id });
-		await RefreshTokensProvider.deleteByUserId(user.id);
-		const refreshToken = await RefreshTokensProvider.create(user.id);
+		await RefreshTokenProvider.deleteByUserId(user.id);
+		const refreshToken = await RefreshTokenProvider.create(user.id);
 
 		return res
 			.status(StatusCodes.OK)
