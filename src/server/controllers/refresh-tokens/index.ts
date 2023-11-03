@@ -1,8 +1,8 @@
 
 
-import { getNewAccessToken } from './GetNewAccessToken';
+import { getTokens } from './GetTokens';
 
 
 export const RefreshTokensController = {
-	getNewAccessToken
+	getTokens
 };

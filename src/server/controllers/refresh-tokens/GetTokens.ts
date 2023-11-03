@@ -7,7 +7,7 @@ import { expired } from '../../functions/time';
 import { RefreshTokenError } from '../../utils/errors';
 
 
-export const getNewAccessToken = async (req: Request<{}, {}, RefreshTokenObj>, res: Response) => {
+export const getTokens = async (req: Request<{}, {}, RefreshTokenObj>, res: Response) => {
 
 	const { getById, deleteById, create } = RefreshTokenProvider;
 
