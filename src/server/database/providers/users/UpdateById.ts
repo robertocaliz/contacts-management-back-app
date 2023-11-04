@@ -5,7 +5,7 @@ import userModel, { User } from '../../models/User';
 const message = 'Error updating user!';
 
 
-export const updateById = async (user: User, userId: string) => {
+export const updateById = async (user: Partial<User>, userId: string) => {
 	try {
 		const result = await userModel.findByIdAndUpdate(userId, user);
 		if (!result?.isModified) {

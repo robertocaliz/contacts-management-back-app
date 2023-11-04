@@ -78,6 +78,13 @@ export class ForbiddenError extends ApiError {
 
 export class InactiveUserError extends ApiError {
 	constructor(message?: string, error?: Error) {
-		super('RefreshTokenError', StatusCodes.FORBIDDEN, message, error);
+		super('InactiveUserError', StatusCodes.FORBIDDEN, message, error);
+	}
+}
+
+
+export class BadRequestError extends ApiError {
+	constructor(message?: string, error?: Error) {
+		super('BadRequestError', StatusCodes.BAD_REQUEST, message, error);
 	}
 }
