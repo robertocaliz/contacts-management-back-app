@@ -28,7 +28,7 @@ export const activate = async (
 			await ActivationTokenProvider.deleteById(activationToken._id);
 			res
 				.status(StatusCodes.OK)
-				.redirect('http://localhost:3000/login');
+				.redirect(process.env.USER_ACTIVATION_SUCCESS_PAGE as string);
 		});
 
 };
