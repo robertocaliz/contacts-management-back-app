@@ -28,5 +28,5 @@ export type RefreshTokenObj = {
 export interface Token {
 	_id?: string;
 	expiresIn?: number;
-	userId: number;
+	userId: string;
 }

@@ -2,14 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import { sendMail } from '../../../functions/email';
 import { renderFile } from '../../../functions/ejs';
 import path from 'path';
-import { InactiveUserError } from '../../../utils/errors';
 import { StatusCodes } from 'http-status-codes';
 
 
 export const sendSignupConfirmationEmail = async (
-	err: InactiveUserError,
 	req: Request,
-	_res: Response,
+	res: Response,
 	next: NextFunction
 ) => {
 
@@ -21,7 +19,7 @@ export const sendSignupConfirmationEmail = async (
 	});
 
 	await sendMail(user.email, html)
-		.then(() => next(err));
+		.then(() => next());
 };
 
 

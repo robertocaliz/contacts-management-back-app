@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { User } from '../../database/models';
 import { RefreshTokenProvider, UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
-import { InactiveUserError, UnauthorizedError } from '../../utils/errors';
+import { UnauthorizedError } from '../../utils/errors';
 import { JWTService, PasswordService } from '../../shared/services';
 import { USER_STATUS } from '../../constants';
 
@@ -19,7 +19,7 @@ export const login = async (
 	if (user && await PasswordService.equals(password, user.password)) {
 
 		if (user?.status === USER_STATUS.Inactive) {
-			return next(new InactiveUserError('Inactive user.'));
+			return next();
 		}
 
 		const accessToken = JWTService.sign({ loggedUserId: user.id });
