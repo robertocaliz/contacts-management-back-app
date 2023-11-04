@@ -1,3 +1,4 @@
+import { User } from '../database/models';
 
 
 export type Id = string;
@@ -30,3 +31,8 @@ export interface Token {
 	expiresIn?: number;
 	userId: string;
 }
+
+
+
+
+export type EmailBodyDetails = Pick<User, 'name' | 'activationToken' | 'email'>

@@ -23,7 +23,8 @@ export const refreshTokenSchemaBody = {
 	userId: {
 		type: Types.ObjectId,
 		required: true,
-		unique: true
+		unique: true,
+		index: true
 	}
 };
 
