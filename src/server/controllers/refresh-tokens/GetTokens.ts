@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import { JWTService } from '../../shared/services';
 import { RefreshTokenObj } from '../../types';
 import { expired } from '../../functions/time';
-import { RefreshTokenError } from '../../utils/errors';
+import { NotFoundError } from '../../utils/errors';
 
 
 export const getTokens = async (req: Request<{}, {}, RefreshTokenObj>, res: Response) => {
@@ -13,32 +13,28 @@ export const getTokens = async (req: Request<{}, {}, RefreshTokenObj>, res: Resp
 
 	const refreshTokenObj = req.body;
 
-	const refreshToken = await getById({
+	let refreshToken = await getById({
 		refreshTokenId: refreshTokenObj.refreshToken
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	}) as any;
+	});
 
 	if (!refreshToken) {
-		throw new RefreshTokenError('Refresh token not found.');
+		throw new NotFoundError('Refresh token not found.');
 	}
 
-	let refreshTokenId = refreshToken.id;
-
-
-	if (expired(refreshToken)) {
-		await deleteById(refreshToken.id);
-		refreshTokenId = await create(refreshToken.userId);
+	if (expired(refreshToken.expiresIn)) {
+		await deleteById(refreshToken._id);
+		refreshToken = await create(refreshToken.userId as string);
 	}
 
 	const accessToken = JWTService.sign({
-		loggedUserId: refreshToken.userId
+		loggedUserId: refreshToken.userId as string
 	});
 
 	return res
 		.status(StatusCodes.OK)
 		.send({
 			accessToken,
-			refreshToken: refreshTokenId
+			refreshToken: refreshToken._id
 		});
-
+		
 };

@@ -4,10 +4,10 @@ import refreshTokenModel from '../../models/RefreshToken';
 
 
 
-export const create = async (userId: number) => {
+export const create = async (userId: string) => {
 	try {
 		const refreshToken = await refreshTokenModel.create({ userId });
-		return refreshToken._id;
+		return refreshToken;
 	} catch (error) {
 		throw new DatabaseError(
 			'Error creating refresh token.',

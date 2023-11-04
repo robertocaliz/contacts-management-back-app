@@ -21,6 +21,10 @@ export const signup = async (
 	await UsersProvider
 		.create({ ...user, password: hash })
 		.then(userId => {
+
+			
+
+
 			req.body.id = userId.toString();
 			next();
 		});

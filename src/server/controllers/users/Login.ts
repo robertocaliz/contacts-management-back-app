@@ -19,7 +19,7 @@ export const login = async (
 	if (user && await PasswordService.equals(password, user.password)) {
 
 		if (user?.status === USER_STATUS.Inactive) {
-			return next(new InactiveUserError());
+			return next(new InactiveUserError('Inactive user.'));
 		}
 
 		const accessToken = JWTService.sign({ loggedUserId: user.id });
@@ -34,11 +34,11 @@ export const login = async (
 					name: user.name,
 					email: user.email,
 					accessToken,
-					refreshToken
+					refreshToken: refreshToken._id
 				}
 			);
 	}
 
-	throw new UnauthorizedError();
+	throw new UnauthorizedError('Incorect email or password.');
 
 };
