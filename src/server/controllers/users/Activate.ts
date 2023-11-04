@@ -14,7 +14,7 @@ export const activate = async (
 ) => {
 
 	const activationToken = await ActivationTokenProvider.getById(req.params.activationToken as string);
-
+	
 	if (!activationToken || expired(activationToken.expiresIn)) {
 		throw new BadRequestError('Invalid or expired activation token.');
 	}
@@ -28,7 +28,7 @@ export const activate = async (
 			await ActivationTokenProvider.deleteById(activationToken._id);
 			res
 				.status(StatusCodes.OK)
-				.redirect('http://localhost:3000/signin');
+				.redirect('http://localhost:3000/login');
 		});
 
 };

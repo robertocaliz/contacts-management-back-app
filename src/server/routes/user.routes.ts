@@ -13,7 +13,7 @@ userRoutes.post('/login', UsersController.login, sendSignupConfirmationEmail, th
 userRoutes.get('/users/:id', ensureAuthenticated, UsersController.getById);
 userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
-userRoutes.patch('signup/activate/:activationToken', UsersController.activate);
+userRoutes.get('/signup/activate/:activationToken', UsersController.activate);
 
 
 export { userRoutes };
