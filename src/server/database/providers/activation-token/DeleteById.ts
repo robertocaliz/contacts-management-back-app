@@ -7,8 +7,8 @@ const errMessage = 'Error deleting activation token.';
 
 export const deleteById = async (_id: string) => {
 	try {
-		const result = await activationTokenModel.deleteOne({ _id });
-		if (result.deletedCount === 0) {
+		const activationTokenDeleted = await activationTokenModel.findByIdAndDelete(_id);
+		if (!activationTokenDeleted) {
 			throw new DatabaseError(errMessage);
 		}
 	} catch (error) {
