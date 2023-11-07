@@ -10,20 +10,17 @@ export const sendSignupConfirmationEmail = async (
 	res: Response,
 	next: NextFunction
 ) => {
-
 	const user = req.body;
-
 	const html = await renderFile({
 		file: path.resolve(__dirname, '..', '..', '..', 'ejs-files', 'signup-confirmation-message.ejs'),
 		data: { user }
 	});
-
 	await sendMail(user.email, html)
 		.then(() => next());
 };
 
 
-export const returnResponse = (
+export const returnSignupResponse = (
 	req: Request,
 	res: Response,
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,3 +30,33 @@ export const returnResponse = (
 		.status(StatusCodes.CREATED)
 		.json({ emailSend: true });
 };
+
+
+
+export const sendSignupRecoveryEmail = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const user = req.body;
+	const html = await renderFile({
+		file: path.resolve(__dirname, '..', '..', '..', 'ejs-files', 'signup-recovery-message.ejs'),
+		data: { user }
+	});
+	await sendMail(user.email, html)
+		.then(() => next());
+};
+
+
+
+export const returnSignupRecoveryResponse = (
+	req: Request,
+	res: Response,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	next: NextFunction
+) => {
+	res
+		.status(StatusCodes.OK)
+		.json({ emailSend: true });
+};
+
