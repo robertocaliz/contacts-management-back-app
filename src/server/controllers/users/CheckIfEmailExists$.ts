@@ -13,6 +13,7 @@ export const checkIfEmailExists$ = async (
 	const { email } = req.body;
 	const user = await UsersProvider.getByEmail(email);
 	if (user) {
+		await RecoveryTokenProvider.deleteByUserId(String(user._id));
 		const recoveryTokenId = await RecoveryTokenProvider.create(String(user._id));
 		req.body = {
 			email,

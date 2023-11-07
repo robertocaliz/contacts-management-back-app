@@ -15,7 +15,12 @@ export const sendSignupConfirmationEmail = async (
 		file: path.resolve(__dirname, '..', '..', '..', 'ejs-files', 'signup-confirmation-message.ejs'),
 		data: { user }
 	});
-	await sendMail(user.email, html)
+	await sendMail(
+		{
+			to: user.email,
+			html,
+			subject: 'Activação de conta'
+		})
 		.then(() => next());
 };
 
@@ -43,7 +48,12 @@ export const sendSignupRecoveryEmail = async (
 		file: path.resolve(__dirname, '..', '..', '..', 'ejs-files', 'signup-recovery-message.ejs'),
 		data: { user }
 	});
-	await sendMail(user.email, html)
+	await sendMail(
+		{
+			to: user.email,
+			html,
+			subject: 'Recuperação de cadastro'
+		})
 		.then(() => next());
 };
 
