@@ -21,7 +21,7 @@ export const checkIfEmailExists$ = async (
 		};
 		return next();
 	}
-	throw new NotFoundError();
+	throw new NotFoundError('Email not found in the System.');
 };
 
 
