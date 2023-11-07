@@ -12,7 +12,7 @@ export const activate = async (
 	req: Request<Pick<User, 'activationToken'>>,
 	res: Response,
 ) => {
-
+	console.log('Hi');
 	const activationToken = await ActivationTokenProvider.getById(req.params.activationToken as string);
 	
 	if (!activationToken || expired(activationToken.expiresIn)) {

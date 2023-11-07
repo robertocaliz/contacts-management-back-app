@@ -9,7 +9,7 @@ import { getExpirationTime } from '../../functions/time';
 export interface RefreshToken extends Token { }
 
 
-export const refreshTokenSchemaBody = {
+export const tokenSchema = new Schema({
 	_id: {
 		type: String,
 		required: true,
@@ -26,9 +26,10 @@ export const refreshTokenSchemaBody = {
 		unique: true,
 		index: true
 	}
-};
+});
 
-const refreshTokenSchema = new Schema(refreshTokenSchemaBody);
+
+const refreshTokenSchema = tokenSchema;
 
 
 const refreshTokenModel = model('refresh_token', refreshTokenSchema);
