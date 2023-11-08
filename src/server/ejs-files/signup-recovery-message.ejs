@@ -1,4 +1,5 @@
 <html>
+
 <head>
 	<style>
 		body {
@@ -24,8 +25,8 @@
 		<main>
 			<p>Recebemos o seu pedido de <strong>recuperação de cadastro</strong>!</p>
 			<p>Clique no linque abaixo para recuperar o seu cadastro.</p>
-			<a href="http://localhost:3000/signup/activate/<%= user.recoveryToken %>">
-				http://localhost:3000/signup/activate/<%= user.recoveryToken %>
+			<a href="http://localhost:3000/signup/recover/<%= user.recoveryToken %>">
+				http://localhost:3000/signup/recover/<%= user.recoveryToken %>
 			</a>
 			<p>Caso não tenha conhecimento desse email, ignore-o.</p>
 		</main>

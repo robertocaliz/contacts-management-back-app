@@ -20,6 +20,7 @@ userRoutes.post('/signup', UsersController.signup, sendSignupConfirmationEmail, 
 userRoutes.post('/login', UsersController.login, sendSignupConfirmationEmail, throwInactiveUserError);
 userRoutes.get('/users/:id', ensureAuthenticated, UsersController.getById);
 userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById);
+userRoutes.patch('/users/:recoveryToken', UsersController.updatePassword);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
 
 

@@ -5,6 +5,7 @@ import { updateById } from './UpdateById';
 import { checkIfEmailExists } from './CheckIfEmailExists';
 import { activate } from './Activate';
 import { checkIfEmailExists$ } from './CheckIfEmailExists$';
+import { updatePassword } from './UpdatePassword';
 
 export const UsersController = {
 	signup,
@@ -13,5 +14,6 @@ export const UsersController = {
 	updateById,
 	checkIfEmailExists,
 	activate,
-	checkIfEmailExists$
+	checkIfEmailExists$,
+	updatePassword
 };
