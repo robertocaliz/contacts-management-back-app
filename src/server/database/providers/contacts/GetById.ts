@@ -7,7 +7,9 @@ import userModel from '../../models/User';
 
 export const getById = async (contactId: string, loggedUserId: string) => {
 	try {
-		const [{ contacts }] = await userModel.find({ _id: loggedUserId }, {
+		const [{ contacts }] = await userModel.find({
+			_id: loggedUserId
+		}, {
 			contacts: {
 				$elemMatch: {
 					_id: contactId

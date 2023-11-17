@@ -10,7 +10,9 @@ const errorMessage = 'Error deleting contact.';
 
 export const deleteById = async (contactId: Id, loggedUserId: Id) => {
 	try {
-		const result = await userModel.updateOne({ _id: loggedUserId }, {
+		const result = await userModel.updateOne({
+			_id: loggedUserId
+		}, {
 			$pull: {
 				contacts: {
 					_id: contactId

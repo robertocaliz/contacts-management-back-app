@@ -8,7 +8,9 @@ const errMessage = 'Error creating contact.';
 
 export const create = async (contact: Contact, loggedUserId: string) => {
 	try {
-		const result = await userModel.updateOne({ _id: loggedUserId }, {
+		const result = await userModel.updateOne({
+			_id: loggedUserId
+		}, {
 			$push: {
 				contacts: {
 					$each: [contact],
