@@ -1,7 +1,7 @@
 
 import { Schema, model } from 'mongoose';
 import { REGEX, USER_STATUS } from '../../constants';
-import { contactsSchema } from './Contact';
+import { Contact, contactsSchema } from './Contact';
 
 
 
@@ -14,6 +14,7 @@ export interface User {
 	refreshToken?: string;
 	activationToken?: string;
 	recoveryToken?: string;
+	contacts?: Array<Contact>
 	status?: string;
 }
 

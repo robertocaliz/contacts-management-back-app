@@ -1,16 +1,15 @@
-import { Id } from '../../../types';
 import { DatabaseError } from '../../../utils/errors';
 import userModel, { User } from '../../models/User';
 
 
-export const getById = async (id: Id) => {
+
+export const count = async (userId: string) => {
 	try {
-		const user = await userModel
-			.findById<User>(id);
-		return user;
+		const user = await userModel.findById<User>(userId);
+		return user?.contacts?.length ?? 0;
 	} catch (error) {
 		throw new DatabaseError(
-			'Error loading user.',
+			'Error counting contacts.',
 			error as Error
 		);
 	}

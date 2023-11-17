@@ -4,13 +4,18 @@ import { ContactsProvider } from '../../database/providers';
 import { QueryProps } from '../../types';
 
 
-export const getAll = async (req: Request<{}, {}, {}, QueryProps>, res: Response) => {
+export const getAll = async (
+	req: Request<{}, {}, {}, QueryProps>,
+	res: Response) => {
+
 	const { loggedUserId } = req.headers;
-	await ContactsProvider
-		.getAll(loggedUserId as string, { ...req.query })
-		.then(contacts => {
-			res
-				.status(StatusCodes.OK)
-				.json(contacts);
-		});
+
+	const contacts = await ContactsProvider.getAll(loggedUserId as string, { ...req.query });
+
+	const count = await ContactsProvider.count(loggedUserId as string);
+
+	return res.status(StatusCodes.OK).json({
+		count,
+		objs: contacts
+	});
 };

@@ -7,7 +7,7 @@ export type Id = string;
 
 
 export type GetAllProps = {
-	limit?: number;
+	per_page?: number;
 	page?: number;
 	filter?: string
 	criteria?: string;

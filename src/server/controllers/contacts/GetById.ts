@@ -11,7 +11,8 @@ export const getById = async (req: Request<Partial<Contact>>, res: Response) => 
 	const { loggedUserId } = req.headers;
 	const contact = await ContactsProvider.getById(contactId as string, loggedUserId as string);
 	if (contact) {
-		return res.status(StatusCodes.OK)
+		return res
+			.status(StatusCodes.OK)
 			.json(contact);
 	}
 	throw new NotFoundError('Contact not found.');

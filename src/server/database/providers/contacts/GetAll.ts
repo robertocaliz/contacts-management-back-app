@@ -3,16 +3,19 @@ import { DatabaseError } from '../../../utils/errors';
 import userModel from '../../models/User';
 
 
-
-export const getAll = async (loggedUserId: string, { page = 1, limit = 10 }: GetAllProps) => {
-	const offset = (page - 1) * limit;
-	limit = (page == 1) ? limit : (limit * 2);
+export const getAll = async (loggedUserId: string, { page = 1, per_page = 5 }: GetAllProps) => {
+	const start = (page - 1) * Number(per_page);
 	try {
 		const [{ contacts }] = await userModel.find({ _id: loggedUserId }, {
-			contacts: { $slice: [offset, limit] }
+			contacts: {
+				$slice: [start, Number(per_page)]
+			}
 		});
 		return contacts;
 	} catch (error) {
-		throw new DatabaseError('Error loading contacts.', error as Error);
+		throw new DatabaseError(
+			'Error loading contacts.',
+			error as Error
+		);
 	}
 };
