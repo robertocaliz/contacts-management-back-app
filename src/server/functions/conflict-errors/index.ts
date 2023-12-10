@@ -1,9 +1,7 @@
 
 export type ConflictErrorT = {
 	name?: string,
-	options?: {
-		message: string
-	}
+	message?: string
 }
 
 
@@ -13,9 +11,7 @@ let errors: Array<ConflictErrorT> = [];
 const setError = (name: string, message: string) => {
 	errors.push({
 		name,
-		options: {
-			message
-		}
+		message
 	});
 };
 

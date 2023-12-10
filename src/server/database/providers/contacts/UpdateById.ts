@@ -24,6 +24,9 @@ export const updateById = async (contact: Contact, loggedUserId: string) => {
 			throw new DatabaseError(errorMessage);
 		}
 	} catch (error) {
-		throw new DatabaseError(errorMessage, error as Error);
+		throw new DatabaseError(
+			'Error updating contact.',
+			error as Error
+		);
 	}
 };
