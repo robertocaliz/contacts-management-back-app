@@ -11,6 +11,7 @@ export const updateById = async (user: Partial<User>, userId: string) => {
 		if (!result?.isModified) {
 			throw new DatabaseError(message);
 		}
+		return result;
 	} catch (error) {
 		throw new DatabaseError(message, error as Error);
 	}

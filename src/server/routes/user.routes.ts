@@ -10,7 +10,7 @@ import {
 } from '../shared/middleware/signup';
 
 
-import { throwInactiveUserError } from '../shared/middleware/login';
+import { sendMailToConfirmUserEmailAlteration, throwInactiveUserError } from '../shared/middleware/login';
 
 
 const userRoutes = Router();
@@ -19,7 +19,7 @@ const userRoutes = Router();
 userRoutes.post('/signup', UsersController.signup, sendSignupConfirmationEmail, returnSignupResponse);
 userRoutes.post('/login', UsersController.login, sendSignupConfirmationEmail, throwInactiveUserError);
 userRoutes.get('/users/:id', ensureAuthenticated, UsersController.getById);
-userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById);
+userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById, sendMailToConfirmUserEmailAlteration);
 userRoutes.patch('/users/:recoveryToken', UsersController.updatePassword);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
 

@@ -3,7 +3,7 @@ import { User } from '../../database/models';
 import { ActivationTokenProvider, UsersProvider } from '../../database/providers';
 import { PasswordService } from '../../shared/services';
 import { ConflictError } from '../../utils/errors';
-import { getConflictErrorsBeforeSignUp } from './helper';
+import { findConflictErrors } from './helper';
 
 
 
@@ -12,14 +12,18 @@ export const signup = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const user = req.body;
-	const errors = await getConflictErrorsBeforeSignUp(user);
-	if (errors.length > 0) {
-		throw new ConflictError('', errors);
+	
+	const userData = req.body;
+
+	const result = await findConflictErrors(userData);
+	if (result.found) {
+		throw new ConflictError('', result.errors);
 	}
-	const hash = await PasswordService.getHash(user.password);
+
+	const hash = await PasswordService.getHash(userData.password);
+
 	await UsersProvider
-		.create({ ...user, password: hash })
+		.create({ ...userData, password: hash })
 		.then(async userId => {
 			const activationToken = await ActivationTokenProvider.create(
 				{ userId: userId.toString() }
@@ -27,4 +31,5 @@ export const signup = async (
 			req.body.activationToken = activationToken._id;
 			next();
 		});
+
 };

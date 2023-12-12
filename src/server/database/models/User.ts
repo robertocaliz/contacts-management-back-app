@@ -14,7 +14,8 @@ export interface User {
 	refreshToken?: string;
 	activationToken?: string;
 	recoveryToken?: string;
-	contacts?: Array<Contact>
+	alterationToken?: string;
+	contacts?: Array<Contact>;
 	status?: string;
 }
 
