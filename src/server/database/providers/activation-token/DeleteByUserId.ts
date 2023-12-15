@@ -1,5 +1,5 @@
 import { DatabaseError } from '../../../utils/errors';
-import activationTokenModel from '../../models/ActivationToken';
+import { activationTokenModel } from '../../models/activation-token';
 
 
 const errMessage = 'Error deleting activation token.';

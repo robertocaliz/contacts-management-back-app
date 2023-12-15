@@ -6,6 +6,7 @@ import { checkIfEmailExists } from './CheckIfEmailExists';
 import { activate } from './Activate';
 import { checkIfEmailExists$ } from './CheckIfEmailExists$';
 import { updatePassword } from './UpdatePassword';
+import { updateEmailById } from './UpdateEmailById';
 
 export const UsersController = {
 	signup,
@@ -15,5 +16,6 @@ export const UsersController = {
 	checkIfEmailExists,
 	activate,
 	checkIfEmailExists$,
-	updatePassword
+	updatePassword,
+	updateEmailById
 };

@@ -15,7 +15,7 @@ export const findConflictErrors = async ({ email }: Partial<User>) => {
 	}
 	const errors = getErrors();
 	return {
-		found: errors ? true : false,
+		found: errors.length > 0 ? true : false,
 		errors
 	};
 };

@@ -1,6 +1,5 @@
 import { DatabaseError } from '../../../utils/errors';
-import { ActivationToken } from '../../models';
-import activationTokenModel from '../../models/ActivationToken';
+import { ActivationToken, activationTokenModel } from '../../models/activation-token';
 
 
 

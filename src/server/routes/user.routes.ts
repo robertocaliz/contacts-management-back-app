@@ -22,6 +22,7 @@ userRoutes.get('/users/:id', ensureAuthenticated, UsersController.getById);
 userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById, sendMailToConfirmUserEmailAlteration);
 userRoutes.patch('/users/:recoveryToken', UsersController.updatePassword);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
+userRoutes.patch('/update_email/:alterationToken', UsersController.updateEmailById);
 
 
 userRoutes.post(

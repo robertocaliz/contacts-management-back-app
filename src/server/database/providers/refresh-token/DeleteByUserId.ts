@@ -1,7 +1,8 @@
 
 
 import { DatabaseError } from '../../../utils/errors';
-import refreshTokenModel from '../../models/RefreshToken';
+import { refreshTokenModel } from '../../models/refresh-token';
+
 
 export const deleteByUserId = async (userId: string) => {
 	try {
@@ -9,8 +10,8 @@ export const deleteByUserId = async (userId: string) => {
 		return result.deletedCount;
 	} catch (error) {
 		throw new DatabaseError(
-			'Error while deleting refresh token.'
-			, error as Error
+			'Error deleting refresh token.',
+			error as Error
 		);
 	}
 };

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { InactiveUserError } from '../../../utils/errors';
 import { renderFile } from '../../../functions/ejs';
 import path from 'path';
@@ -33,6 +33,8 @@ export const sendMailToConfirmUserEmailAlteration = async (
 		.then(() => {
 			res
 				.status(StatusCodes.OK)
-				.send();
+				.json({
+					emailSend: true
+				});
 		});
 };

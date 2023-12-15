@@ -4,6 +4,7 @@ import { UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 import { ConflictError } from '../../utils/errors';
 import { findConflictErrors } from './helper';
+import { AlterationTokenProvider } from '../../database/providers/alteration-token';
 
 
 
@@ -15,18 +16,23 @@ export const updateById = async (
 	const { id: userId } = req.params;
 	const newUserData = req.body;
 
-	const user = await UsersProvider
+	await UsersProvider
 		.updateById({ name: newUserData.name }, String(userId));
 
 	if (newUserData.email) {
-		
+
 		const result = await findConflictErrors(newUserData);
 		if (result.found) {
 			throw new ConflictError('', result.errors);
 		}
 
-		req.body.email = user.email;
-		req.body.alterationToken = 'alteration-token';
+		const alterationToken = await AlterationTokenProvider.create({
+			userId: userId as string,
+			newEmail: newUserData.email
+		});
+
+		req.body.email = newUserData.email;
+		req.body.alterationToken = alterationToken;
 
 		return next();
 

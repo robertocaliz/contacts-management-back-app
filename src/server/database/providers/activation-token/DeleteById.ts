@@ -1,17 +1,15 @@
 import { DatabaseError } from '../../../utils/errors';
-import activationTokenModel from '../../models/ActivationToken';
-
-
-const errMessage = 'Error deleting activation token.';
+import { activationTokenModel } from '../../models/activation-token';
 
 
 export const deleteById = async (_id: string) => {
 	try {
-		const activationTokenDeleted = await activationTokenModel.findByIdAndDelete(_id);
-		if (!activationTokenDeleted) {
-			throw new DatabaseError(errMessage);
-		}
+		const deletedActivationToken = await activationTokenModel.findByIdAndDelete(_id);
+		return deletedActivationToken;
 	} catch (error) {
-		throw new DatabaseError(errMessage, error as Error);
+		throw new DatabaseError(
+			'Error deleting activation token.',
+			error as Error
+		);
 	}
 };

@@ -1,5 +1,4 @@
 <html>
-
 <head>
 	<style>
 		body {
@@ -10,7 +9,6 @@
 		}
 	</style>
 </head>
-
 <body>
 	<div>
 		<header>
@@ -24,10 +22,12 @@
 		<br />
 		<main>
 			<p>Cliqui no link abaixo para confirmar a alteração do seu e-mail na <strong>ContactsPro</strong>.</p>
-			<a href="http://localhost:3000/signup/activate/<%= user.alterationToken %>">
-				http://localhost:3000/signup/activate/<%= user.activationToken %>
+			<a href="http://localhost:3000/profile/confirm-email/<%= user.alterationToken %>" target="_blank">
+				http://localhost:3000/profile/confirm-email/<%= user.alterationToken %>
 			</a>
-			<p>Caso não tenha conhecimento desse email, ignore-o.</p>
+			<br />
+			<br />
+			<p><strong>Nota: </strong> Caso não tenha conhecimento desse e-mail, ignore-o.</p>
 		</main>
 		<br />
 		<footer>

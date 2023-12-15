@@ -1,6 +1,5 @@
-
 import { DatabaseError } from '../../../utils/errors';
-import refreshTokenModel from '../../models/RefreshToken';
+import { refreshTokenModel } from '../../models/refresh-token';
 
 
 

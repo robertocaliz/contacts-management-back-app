@@ -1,5 +1,5 @@
 import { DatabaseError } from '../../../utils/errors';
-import { recoveryTokenModel } from '../../models';
+import { recoveryTokenModel } from '../../models/recovery-token';
 
 
 
