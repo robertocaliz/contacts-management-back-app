@@ -3,14 +3,9 @@ import { recoveryTokenModel } from '../../models/recovery-token';
 
 
 
-export const deleteById = async (id: string) => {
+export const deleteById = async (recoveryTokenId: string) => {
 	try {
-		const deletedRecoveryToken = await recoveryTokenModel.findByIdAndDelete(id);
-		if (!deletedRecoveryToken) {
-			throw new DatabaseError(
-				`Error deleting recovery token with id ${id}`
-			);
-		}
+		return await recoveryTokenModel.findByIdAndDelete(recoveryTokenId);
 	} catch (error) {
 		throw new DatabaseError(
 			'Error deleting recovery token.',

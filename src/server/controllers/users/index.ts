@@ -4,8 +4,8 @@ import { getById } from './GetById';
 import { updateById } from './UpdateById';
 import { checkIfEmailExists } from './CheckIfEmailExists';
 import { activate } from './Activate';
-import { checkIfEmailExists$ } from './CheckIfEmailExists$';
-import { updatePassword } from './UpdatePassword';
+import { recoverSignup } from './RecoverSignup';
+import { updatePasswordById } from './UpdatePasswordById';
 import { updateEmailById } from './UpdateEmailById';
 
 export const UsersController = {
@@ -15,7 +15,7 @@ export const UsersController = {
 	updateById,
 	checkIfEmailExists,
 	activate,
-	checkIfEmailExists$,
-	updatePassword,
+	recoverSignup,
+	updatePasswordById,
 	updateEmailById
 };
