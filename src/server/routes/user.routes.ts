@@ -23,7 +23,7 @@ userRoutes.put('/users/:id', ensureAuthenticated, UsersController.updateById, se
 userRoutes.patch('/users/:recoveryToken', UsersController.updatePasswordById);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);
 userRoutes.patch('/update_email/:alterationToken', UsersController.updateEmailById);
-
+userRoutes.post('/check_email', UsersController.checkIfEmailExists);
 
 userRoutes.post(
 	'/recover-sinup',
