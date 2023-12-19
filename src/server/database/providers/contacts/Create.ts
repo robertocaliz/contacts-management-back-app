@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { DatabaseError } from '../../../utils/errors';
 import { Contact } from '../../models';
 import userModel from '../../models/User';
@@ -9,7 +10,7 @@ const errMessage = 'Error creating contact.';
 export const create = async (contact: Contact, loggedUserId: string) => {
 	try {
 		const result = await userModel.updateOne({
-			_id: loggedUserId
+			_id: new Types.ObjectId(loggedUserId)
 		}, {
 			$push: {
 				contacts: {

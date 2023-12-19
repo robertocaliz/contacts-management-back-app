@@ -1,5 +1,6 @@
 
 
+import { Types } from 'mongoose';
 import { DatabaseError } from '../../../utils/errors';
 import userModel from '../../models/User';
 
@@ -8,11 +9,11 @@ import userModel from '../../models/User';
 export const getById = async (contactId: string, loggedUserId: string) => {
 	try {
 		const [{ contacts }] = await userModel.find({
-			_id: loggedUserId
+			_id: new Types.ObjectId(loggedUserId)
 		}, {
 			contacts: {
 				$elemMatch: {
-					_id: contactId
+					_id: new Types.ObjectId(contactId)
 				}
 			}
 		});

@@ -5,17 +5,12 @@ export type Id = string;
 
 
 
-
-export type GetAllProps = {
+export interface QueryProps {
 	per_page?: number;
 	page?: number;
 	filter?: string
 	criteria?: string;
 }
-
-
-
-export interface QueryProps extends Omit<GetAllProps, 'createdBy'> { }
 
 
 

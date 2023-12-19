@@ -5,7 +5,6 @@ import { getById } from './GetById';
 import { updateById } from './UpdateById';
 import { getByEmail } from './GetByEmail';
 import { getByPhoneNumber } from './GetByPhoneNumber';
-import { count } from './Count';
 
 
 export const ContactsProvider = {
@@ -15,6 +14,5 @@ export const ContactsProvider = {
 	updateById,
 	deleteById,
 	getByEmail,
-	getByPhoneNumber,
-	count
+	getByPhoneNumber
 };
