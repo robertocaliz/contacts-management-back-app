@@ -10,26 +10,24 @@ export const throwInactiveUserError = (req: Request, res: Response) => {
     throw new InactiveUserError('Inactive user.');
 };
 
-export const sendMailToConfirmUserEmailAlteration = async (
+export const sendMailToConfirmEmailAddressChange = async (
     req: Request,
     res: Response,
 ) => {
     const user = req.body;
-    const html = await renderFile({
+    const mailBody = await renderFile({
         file: path.resolve(
             __dirname,
-            '..',
-            '..',
-            '..',
-            'ejs-files',
-            'confirm-user-email-alteration-message.ejs',
+            ...(process.env.MAIL_BODY_MAIL_ADDRESS_CHANGE?.split(
+                ',',
+            ) as string[]),
         ),
         data: { user },
     });
     await sendMail({
         to: user.email,
-        html,
-        subject: 'Ateração de e-mail',
+        mailBody,
+        subject: String(process.env.MAIL_SUBJECT_MAIL_ADDRESS_CHANGE),
     }).then(() => {
         res.status(StatusCodes.OK).json({
             emailSend: true,

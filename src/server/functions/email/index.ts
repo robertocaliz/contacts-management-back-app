@@ -15,16 +15,16 @@ const transporter = nodeMailer.createTransport({
 
 type SendMailProps = {
     to: string;
-    html: string;
+    mailBody: string;
     subject: string;
 };
 
-export const sendMail = async ({ to, html, subject }: SendMailProps) => {
+export const sendMail = async ({ to, mailBody, subject }: SendMailProps) => {
     const mailOptions: MailOptions = {
         from: process.env.EMAIL_ADRESS,
         to,
         subject,
-        html,
+        html: mailBody,
     };
     return await transporter.sendMail(mailOptions);
 };

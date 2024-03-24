@@ -10,7 +10,7 @@ import {
 } from '../shared/middleware/signup';
 
 import {
-    sendMailToConfirmUserEmailAlteration,
+    sendMailToConfirmEmailAddressChange,
     throwInactiveUserError,
 } from '../shared/middleware/login';
 
@@ -33,7 +33,7 @@ userRoutes.put(
     '/users/:id',
     ensureAuthenticated,
     UsersController.updateById,
-    sendMailToConfirmUserEmailAlteration,
+    sendMailToConfirmEmailAddressChange,
 );
 userRoutes.patch('/users/:recoveryToken', UsersController.updatePasswordById);
 userRoutes.post('/checkemail', UsersController.checkIfEmailExists);

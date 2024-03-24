@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from 'express';
 import { sendMail } from '../../../functions/email';
 import { renderFile } from '../../../functions/ejs';
@@ -10,31 +11,20 @@ export const sendSignupConfirmationEmail = async (
     next: NextFunction,
 ) => {
     const user = req.body;
-    const html = await renderFile({
+    const mailBody = await renderFile({
         file: path.resolve(
             __dirname,
-            '..',
-            '..',
-            '..',
-            'ejs-files',
-            'signup-confirmation-message.ejs',
+            ...(process.env.MAIL_BODY_SIGNUP_CONFIRMATION?.split(
+                ',',
+            ) as string[]),
         ),
         data: { user },
     });
     await sendMail({
         to: user.email,
-        html,
-        subject: 'Activação de conta',
+        mailBody,
+        subject: String(process.env.MAIL_SUBJECT_SIGNUP_CONFIRMATION),
     }).then(() => next());
-};
-
-export const returnSignupResponse = (
-    req: Request,
-    res: Response,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    next: NextFunction,
-) => {
-    res.status(StatusCodes.CREATED).json({ emailSend: true });
 };
 
 export const sendSignupRecoveryEmail = async (
@@ -43,28 +33,31 @@ export const sendSignupRecoveryEmail = async (
     next: NextFunction,
 ) => {
     const user = req.body;
-    const html = await renderFile({
+    const mailBody = await renderFile({
         file: path.resolve(
             __dirname,
-            '..',
-            '..',
-            '..',
-            'ejs-files',
-            'signup-recovery-message.ejs',
+            ...(process.env.MAIL_BODY_SIGNUP_RECOVER?.split(',') as string[]),
         ),
         data: { user },
     });
     await sendMail({
         to: user.email,
-        html,
-        subject: 'Recuperação de cadastro',
+        mailBody,
+        subject: String(process.env.MAIL_SUBJECT_SIGNUP_RECOVER),
     }).then(() => next());
+};
+
+export const returnSignupResponse = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    res.status(StatusCodes.CREATED).json({ emailSend: true });
 };
 
 export const returnSignupRecoveryResponse = (
     req: Request,
     res: Response,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     next: NextFunction,
 ) => {
     res.status(StatusCodes.OK).json({ emailSend: true });
