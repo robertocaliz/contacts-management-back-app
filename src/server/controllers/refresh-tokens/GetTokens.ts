@@ -6,35 +6,33 @@ import { RefreshTokenObj } from '../../types';
 import { expired } from '../../functions/time';
 import { NotFoundError } from '../../utils/errors';
 
+export const getTokens = async (
+    req: Request<Record<string, never>, Record<string, never>, RefreshTokenObj>,
+    res: Response,
+) => {
+    const { getById, deleteById, create } = RefreshTokenProvider;
 
-export const getTokens = async (req: Request<{}, {}, RefreshTokenObj>, res: Response) => {
+    const refreshTokenObj = req.body;
 
-	const { getById, deleteById, create } = RefreshTokenProvider;
+    let refreshToken = await getById({
+        refreshTokenId: refreshTokenObj.refreshToken,
+    });
 
-	const refreshTokenObj = req.body;
+    if (!refreshToken) {
+        throw new NotFoundError('Refresh token not found.');
+    }
 
-	let refreshToken = await getById({
-		refreshTokenId: refreshTokenObj.refreshToken
-	});
+    if (expired(refreshToken.expiresIn)) {
+        await deleteById(refreshToken._id);
+        refreshToken = await create(refreshToken.userId as string);
+    }
 
-	if (!refreshToken) {
-		throw new NotFoundError('Refresh token not found.');
-	}
+    const accessToken = JWTService.sign({
+        loggedUserId: refreshToken.userId as string,
+    });
 
-	if (expired(refreshToken.expiresIn)) {
-		await deleteById(refreshToken._id);
-		refreshToken = await create(refreshToken.userId as string);
-	}
-
-	const accessToken = JWTService.sign({
-		loggedUserId: refreshToken.userId as string
-	});
-
-	return res
-		.status(StatusCodes.OK)
-		.send({
-			accessToken,
-			refreshToken: refreshToken._id
-		});
-		
+    return res.status(StatusCodes.OK).send({
+        accessToken,
+        refreshToken: refreshToken._id,
+    });
 };

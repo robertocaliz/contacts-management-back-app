@@ -5,9 +5,9 @@ import { getById } from './GetById';
 import { updateById } from './UpdateById';
 
 export const ContactsController = {
-	create,
-	getAll,
-	getById,
-	updateById,
-	deleteById
+    create,
+    getAll,
+    getById,
+    updateById,
+    deleteById,
 };

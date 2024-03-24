@@ -1,19 +1,14 @@
-
-
 import { Schema, model } from 'mongoose';
 import { Token } from '../../../types';
 import { tokenSchemaArg } from '../Token';
 
-
-
-export interface ActivationToken extends Token { }
+export interface ActivationToken extends Token {}
 
 const activationTokenSchema = new Schema({
-	...tokenSchemaArg
+    ...tokenSchemaArg,
 });
 
-export const activationTokenModel = model('activation_token', activationTokenSchema);
-
-
-
-
+export const activationTokenModel = model(
+    'activation_token',
+    activationTokenSchema,
+);

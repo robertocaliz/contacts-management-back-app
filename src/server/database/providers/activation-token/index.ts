@@ -4,8 +4,8 @@ import { getById } from './GetById';
 import { deleteByUserId } from './DeleteByUserId';
 
 export const ActivationTokenProvider = {
-	create,
-	deleteById,
-	getById,
-	deleteByUserId
+    create,
+    deleteById,
+    getById,
+    deleteByUserId,
 };

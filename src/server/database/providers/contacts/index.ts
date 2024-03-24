@@ -6,13 +6,12 @@ import { updateById } from './UpdateById';
 import { getByEmail } from './GetByEmail';
 import { getByPhoneNumber } from './GetByPhoneNumber';
 
-
 export const ContactsProvider = {
-	create,
-	getAll,
-	getById,
-	updateById,
-	deleteById,
-	getByEmail,
-	getByPhoneNumber
+    create,
+    getAll,
+    getById,
+    updateById,
+    deleteById,
+    getByEmail,
+    getByPhoneNumber,
 };

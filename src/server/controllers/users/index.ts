@@ -9,13 +9,13 @@ import { updatePasswordById } from './UpdatePasswordById';
 import { updateEmailById } from './UpdateEmailById';
 
 export const UsersController = {
-	signup,
-	getById,
-	login,
-	updateById,
-	checkIfEmailExists,
-	activate,
-	recoverSignup,
-	updatePasswordById,
-	updateEmailById
+    signup,
+    getById,
+    login,
+    updateById,
+    checkIfEmailExists,
+    activate,
+    recoverSignup,
+    updatePasswordById,
+    updateEmailById,
 };

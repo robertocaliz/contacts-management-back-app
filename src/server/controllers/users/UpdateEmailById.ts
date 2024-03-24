@@ -6,19 +6,15 @@ import { BadRequestError } from '../../utils/errors';
 import { UsersProvider } from '../../database/providers';
 import { expired } from '../../functions/time';
 
-
-
 export const updateEmailById = async (req: Request<User>, res: Response) => {
-	const { alterationToken } = req.params;
-	const deletedAlterationToken = await AlterationTokenProvider.deleteById(
-		alterationToken as string
-	);
-	if (!deletedAlterationToken || expired(deletedAlterationToken.expiresIn)) {
-		throw new BadRequestError('Invalid or expired alteration token.');
-	}
-	const { newEmail, userId } = deletedAlterationToken;
-	await UsersProvider.updateById({ email: newEmail }, userId as string);
-	return res
-		.status(StatusCodes.OK)
-		.json({ newEmail });
+    const { alterationToken } = req.params;
+    const deletedAlterationToken = await AlterationTokenProvider.deleteById(
+        alterationToken as string,
+    );
+    if (!deletedAlterationToken || expired(deletedAlterationToken.expiresIn)) {
+        throw new BadRequestError('Invalid or expired alteration token.');
+    }
+    const { newEmail, userId } = deletedAlterationToken;
+    await UsersProvider.updateById({ email: newEmail }, userId as string);
+    return res.status(StatusCodes.OK).json({ newEmail });
 };
