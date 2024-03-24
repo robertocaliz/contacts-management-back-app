@@ -13,25 +13,20 @@ export const updateById = async (
 ) => {
     const { id: userId } = req.params;
     const newUserData = req.body;
-
     await UsersProvider.updateById({ name: newUserData.name }, String(userId));
-
     if (newUserData.email) {
         const result = await findConflictErrors(newUserData);
         if (result.found) {
             throw new ConflictError('', result.errors);
         }
-
+        await AlterationTokenProvider.deleteByUserId(String(userId));
         const alterationToken = await AlterationTokenProvider.create({
             userId: userId as string,
             newEmail: newUserData.email,
         });
-
         req.body.email = newUserData.email;
         req.body.alterationToken = alterationToken;
-
         return next();
     }
-
     res.status(StatusCodes.OK).send();
 };
