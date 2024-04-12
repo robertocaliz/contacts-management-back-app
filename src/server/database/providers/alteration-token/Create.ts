@@ -8,7 +8,7 @@ export const create = async (alterationToken: AlterationToken) => {
     try {
         const createdAlterationToken =
             await alterationTokenModel.create(alterationToken);
-        return createdAlterationToken._id;
+        return createdAlterationToken;
     } catch (error) {
         throw new DatabaseError(
             'Error creating alteration token.',

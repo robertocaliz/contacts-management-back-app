@@ -3,7 +3,7 @@ import { User } from '../../database/models';
 import { UsersProvider } from '../../database/providers';
 import { StatusCodes } from 'http-status-codes';
 import { ConflictError } from '../../utils/errors';
-import { findConflictErrors } from './helper';
+import { userDataAlreadyExists } from './helper';
 import { AlterationTokenProvider } from '../../database/providers/alteration-token';
 
 export const updateById = async (
@@ -12,20 +12,25 @@ export const updateById = async (
     next: NextFunction,
 ) => {
     const { id: userId } = req.params;
-    const newUserData = req.body;
-    await UsersProvider.updateById({ name: newUserData.name }, String(userId));
-    if (newUserData.email) {
-        const result = await findConflictErrors(newUserData);
-        if (result.found) {
-            throw new ConflictError('', result.errors);
+    const { name: newName, email: newEmail } = req.body;
+    const updatedUser = await UsersProvider.updateById(
+        { name: newName },
+        String(userId),
+    );
+    if (newEmail != updatedUser.email) {
+        const { exists, errors } = await userDataAlreadyExists({
+            email: newEmail,
+        });
+        if (exists) {
+            throw new ConflictError('Data already exists.', errors);
         }
         await AlterationTokenProvider.deleteByUserId(String(userId));
-        const alterationToken = await AlterationTokenProvider.create({
-            userId: userId as string,
-            newEmail: newUserData.email,
+        const createdAlterationToken = await AlterationTokenProvider.create({
+            userId: String(userId),
+            newEmail,
         });
-        req.body.email = newUserData.email;
-        req.body.alterationToken = alterationToken;
+        req.body.email = newEmail;
+        req.body.alterationToken = createdAlterationToken._id;
         return next();
     }
     res.status(StatusCodes.OK).send();

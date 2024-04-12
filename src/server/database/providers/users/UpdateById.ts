@@ -5,7 +5,10 @@ const message = 'Error updating user!';
 
 export const updateById = async (user: Partial<User>, userId: string) => {
     try {
-        const result = await userModel.findByIdAndUpdate(userId, user);
+        const result = await userModel.findByIdAndUpdate(userId, user, {
+            new: true,
+            projection: { _id: 1, name: 0, contacts: 0, email: 1 },
+        });
         if (!result?.isModified) {
             throw new DatabaseError(message);
         }
